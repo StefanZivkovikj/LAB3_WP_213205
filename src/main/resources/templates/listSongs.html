@@ -68,23 +68,72 @@
     <!-- Add Song Button -->
     <a href="/songs/add-form" class="add-song-btn">Add New Song</a>
 
-    <!-- Filter Songs by Album -->
+    <!-- Filters for Songs -->
     <div class="filter">
-        <form th:action="@{/songs/by-album}" method="post">
-            <select name="albumId" required>
-                <option value="" disabled selected>Select Album</option>
-                <option th:each="album : ${albums}" th:value="${album.id}" th:text="${album.name}"></option>
-            </select>
-            <button type="submit">Filter by Album</button>
-        </form>
+        <!-- Filter Songs by Album -->
+<!--        <form th:action="@{/songs/by-album}" method="post" style="display: inline;">-->
+<!--            <select name="albumId" required>-->
+<!--                <option value="" disabled selected>Select Album</option>-->
+<!--                <option th:each="album : ${albums}" th:value="${album.id}" th:text="${album.name}"></option>-->
+<!--            </select>-->
+<!--            <button type="submit">Filter by Album</button>-->
+<!--        </form>-->
+
+<!--        &lt;!&ndash; Filter Songs by Release Year &ndash;&gt;-->
+<!--        <form th:action="@{/songs/by-release-year}" method="post" style="display: inline;">-->
+<!--            <select name="releaseYear" required>-->
+<!--                <option value="" disabled selected>Select Release Year</option>-->
+<!--                <option th:each="year : ${releaseYears}" th:value="${year}" th:text="${year}"></option>-->
+<!--            </select>-->
+<!--            <button type="submit">Filter by Release Year</button>-->
+<!--        </form>-->
+
 
         <!-- Show All Songs Button -->
-        <form th:action="@{/songs}" method="get" style="display: inline;">
-            <button type="submit">Show All Songs</button>
-        </form>
-    </div>
+<!--        <form th:action="@{/songs}" method="get" style="display: inline;">-->
+<!--            <button type="submit">Show All Songs</button>-->
+<!--        </form>-->
+<!--    </div>-->
 
-    <!-- Table for displaying songs -->
+        <div class="filter">
+            <form th:action="@{/songs/filter}" method="post">
+                <!-- Album Dropdown -->
+                <select name="albumId">
+                    <option value="" selected>All Albums</option>
+                    <option th:each="album : ${albums}" th:value="${album.id}" th:text="${album.name}"></option>
+                </select>
+
+                <!-- Release Year Dropdown -->
+                <select name="releaseYear">
+                    <option value="" selected>All Years</option>
+                    <option th:each="year : ${releaseYears}" th:value="${year}" th:text="${year}"></option>
+                </select>
+
+                <!-- Genre Dropdown -->
+                <select name="genre">
+                    <option value="" selected>All Genres</option>
+                    <option th:each="genre : ${genres}" th:value="${genre}" th:text="${genre}"></option>
+                </select>
+
+                <!-- Title Dropdown -->
+                <select name="title">
+                    <option value="" selected>All Titles</option>
+                    <option th:each="title : ${titles}" th:value="${title}" th:text="${title}"></option>
+                </select>
+
+                <!-- Price Dropdown -->
+                <select name="price">
+                    <option value="" selected>All Prices</option>
+                    <option th:each="price : ${prices}" th:value="${price}" th:text="${price}"></option>
+                </select>
+
+                <!-- Filter Button -->
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+
+
+        <!-- Table for displaying songs -->
     <form action="/artist" method="get">
         <table>
             <thead>

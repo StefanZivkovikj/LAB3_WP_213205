@@ -219,10 +219,46 @@ public class SongController {
         return "redirect:/songs";
     }
 
-    @GetMapping("/by-album/{albumId}")
-    public String getSongsByAlbum(@PathVariable Long albumId, Model model) {
-        List<Song> songs = songService.findAllByAlbum_Id(albumId);
-        model.addAttribute("songs", songs);
+//    @GetMapping("/by-album/{albumId}")
+//    public String getSongsByAlbum(@PathVariable Long albumId, Model model) {
+//        List<Song> songs = songService.findAllByAlbum_Id(albumId);
+//        model.addAttribute("songs", songs);
+//        return "listSongs";
+//    }
+
+//    @GetMapping("/by-release-year/{releaseYear}")
+//    public String getSongsByReleaseYear(@PathVariable Integer releaseYear, Model model) {
+//        List<Song> songs = songService.findAllByReleaseYear(releaseYear);
+//        model.addAttribute("songs", songs);
+//        return "listSongs";
+//    }
+@GetMapping("/songs")
+public String listSongs(Model model) {
+    model.addAttribute("songs", songService.findAll()); // All songs for the table
+    model.addAttribute("albums", albumService.findAll()); // All albums for album dropdown
+    model.addAttribute("releaseYears", songService.findDistinctReleaseYears()); // Distinct release years
+    model.addAttribute("genres", songService.findDistinctGenres()); // Distinct genres
+    model.addAttribute("titles", songService.findDistinctTitles()); // Distinct titles
+    model.addAttribute("prices", songService.findDistinctPrices()); // Distinct prices
+    return "listSongs";
+}
+
+
+    @PostMapping("/songs/filter")
+    public String filterSongs(
+            @RequestParam(required = false) Long albumId,
+            @RequestParam(required = false) Integer releaseYear,
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Double price,
+            Model model) {
+        List<Song> filteredSongs = songService.filterSongs(albumId, releaseYear, genre, title, price);
+        model.addAttribute("songs", filteredSongs);
+        model.addAttribute("albums", albumService.findAll());
+        model.addAttribute("releaseYears", songService.findDistinctReleaseYears());
+        model.addAttribute("genres", songService.findDistinctGenres());
+        model.addAttribute("titles", songService.findDistinctTitles());
+        model.addAttribute("prices", songService.findDistinctPrices());
         return "listSongs";
     }
 

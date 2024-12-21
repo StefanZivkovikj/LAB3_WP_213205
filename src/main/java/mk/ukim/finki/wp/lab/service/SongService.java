@@ -31,9 +31,19 @@ public interface SongService {
     // New method for fetching songs by album
     List<Song> findAllByAlbum_Id(Long albumId);
 
+    List<Song> findAllByReleaseYear(Integer releaseYear);
+
     String findMaxTrackId();
 
-//     List<Song> findByAlbumId(Long albumId);
-
-
+    List<Integer> findDistinctReleaseYears();
+    List<String> findDistinctGenres();
+    List<String> findDistinctTitles();
+    List<Double> findDistinctPrices();
+    List<Song> filterSongs(Long albumId, Integer releaseYear, String genre, String title, Double price);
 }
+
+
+//    List<Song> findByAlbumId(Long albumId);
+
+
+
